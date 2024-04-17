@@ -5,7 +5,11 @@
             <a href="#" class="title" @click="handleRoam()">光谷智慧交通</a>
         </div>
         <div class="navbar_center">
-
+            <ul class="items">
+                <AddEvent />
+                <RealTimeTraffic />
+                <SearchEvent />
+            </ul>
         </div>
         <div class="navbar_right">
 
@@ -14,7 +18,9 @@
 </template>
 
 <script setup>
-
+import AddEvent from '../AddEvent.vue';
+import RealTimeTraffic from './components/RealTimeTraffic/RealTimeTraffic.vue';
+import SearchEvent from './components/SearchEvent/SearchEvent.vue';
 </script>
 
 <style>
@@ -35,6 +41,7 @@
     min-width: 180px;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
 }
 
 .navbar_left img {
@@ -56,5 +63,12 @@
 .title:hover {
     color: #666;
     text-shadow: 2px 2px 2px #ccc;
+}
+
+
+.items {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
 }
 </style>

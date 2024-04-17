@@ -1,0 +1,23 @@
+<template>
+    <li class="search_event">
+        <el-dropdown split-button type="primary" @click="handleButtonClick">
+            查询事件
+            <template #dropdown>
+                <el-dropdown-menu>
+                    <el-dropdown-item v-if="isSearch" @click="queryEvent">搜索查询</el-dropdown-item>
+                    <el-dropdown-item v-else @click="cancelSearch">取消搜索</el-dropdown-item>
+                    <el-dropdown-item v-if="isBox" @click="boxSelectQuery">框选查询</el-dropdown-item>
+                    <el-dropdown-item v-else @click="cancelSearch">取消框选</el-dropdown-item>
+                    <el-dropdown-item @click="showCharts">统计图</el-dropdown-item>
+                </el-dropdown-menu>
+            </template>
+        </el-dropdown>
+
+    </li>
+</template>
+
+<script setup>
+let is
+</script>
+
+<style></style>

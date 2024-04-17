@@ -6,6 +6,24 @@
 </template>
 
 <script setup>
+import { useGlobalMap } from '@/plugins/globalmap';
+import { vecLayerGroup, imgLayerGroup } from '../map_libs/tianditu'
+import { onMounted, ref } from 'vue';
+
+let map = ref(null)
+onMounted(() => {
+    map.value = useGlobalMap()
+})
+
+function toggleYingxiang() {
+    map.value.getLayers().clear()
+    map.value.addLayer(imgLayerGroup)
+}
+
+function toggleShiliang() {
+    map.value.getLayers().clear()
+    map.value.addLayer(vecLayerGroup)
+}
 
 </script>
 
