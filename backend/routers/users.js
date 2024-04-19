@@ -86,7 +86,7 @@ router.post('/login', async (req, res, next) => {
             res.send({
                 code: 0,
                 message: '登录成功',
-                result: { data, token },
+                result: { data },
             });
         } else {
             res.send({

@@ -9,6 +9,8 @@
                 <AddEvent />
                 <RealTimeTraffic />
                 <SearchEvent />
+                <MyEvent />
+                <UserNoLogin />
             </ul>
         </div>
         <div class="navbar_right">
@@ -21,6 +23,8 @@
 import AddEvent from '../AddEvent.vue';
 import RealTimeTraffic from './components/RealTimeTraffic/RealTimeTraffic.vue';
 import SearchEvent from './components/SearchEvent/SearchEvent.vue';
+import MyEvent from './components/MyEvent/MyEvent.vue';
+import UserNoLogin from './components/UserInfo/UserNoLogin.vue';
 </script>
 
 <style>

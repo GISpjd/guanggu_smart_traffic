@@ -14,10 +14,18 @@
         </el-dropdown>
 
     </li>
+
+    <div class="searchInput" v-if="inputShow"></div>
 </template>
 
 <script setup>
-let is
+import { ref } from 'vue'
+let isSearch = ref(true)
+console.log(isSearch.value);
+function queryEvent() {
+    isSearch = !isSearch
+    console.log(isSearch.value);
+}
 </script>
 
 <style></style>
