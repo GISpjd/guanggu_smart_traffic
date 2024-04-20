@@ -13,7 +13,6 @@ function userHttp({
     }).then(response => {
         return response.data
     }).catch(error => {
-        console.error('Request failed:', error);
         throw error; // 可以选择抛出错误或者返回错误信息
     })
 }
@@ -89,7 +88,7 @@ const postOrdinaryUserHttp = (user_name, user_password, user_role = 0) => {
  * @param {number} user_islogin 
  * @returns {Promise}
  */
-const putUserHttp = (id, user_name, user_password, user_islogin) => {
+const putUserHttp = ({ id, user_name = '', user_password = '', user_islogin }) => {
     return userHttp({
         url: `/users/${id}`,
         method: 'put',

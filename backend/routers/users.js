@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 const { getOne, getAll, exec } = require('../db/index.js');
 
+const jwt = require('jsonwebtoken')
+
+const { TOKEN_KEY, TIME } = require('../plugins/config.js');
+
 /**
  * 获取符合用户信息
  * GET /users
@@ -83,10 +87,13 @@ router.post('/login', async (req, res, next) => {
         let sql = `select * from all_user where user_name=? and user_password=?`;
         const data = await getOne(sql, [user_name, user_password]);
         if (data) {
+            let token = jwt.sign({ user_name, user_password }, TOKEN_KEY, {
+                expiresIn: TIME
+            })
             res.send({
                 code: 0,
                 message: '登录成功',
-                result: { data },
+                result: { data, token },
             });
         } else {
             res.send({

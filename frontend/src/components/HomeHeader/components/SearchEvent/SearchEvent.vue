@@ -21,10 +21,8 @@
 <script setup>
 import { ref } from 'vue'
 let isSearch = ref(true)
-console.log(isSearch.value);
 function queryEvent() {
-    isSearch = !isSearch
-    console.log(isSearch.value);
+    isSearch.value = !isSearch
 }
 </script>
 

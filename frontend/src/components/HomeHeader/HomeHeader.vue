@@ -10,21 +10,38 @@
                 <RealTimeTraffic />
                 <SearchEvent />
                 <MyEvent />
-                <UserNoLogin />
+
             </ul>
         </div>
         <div class="navbar_right">
-
+            <UserIsLogin v-if="isLogin" @out="handleOutLogin" />
+            <UserNoLogin v-else />
         </div>
     </nav>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { putUserHttp } from '@/request/userHttp'
+import { userModules } from '@/stores/userModulesStore'
+
 import AddEvent from '../AddEvent.vue';
 import RealTimeTraffic from './components/RealTimeTraffic/RealTimeTraffic.vue';
 import SearchEvent from './components/SearchEvent/SearchEvent.vue';
 import MyEvent from './components/MyEvent/MyEvent.vue';
 import UserNoLogin from './components/UserInfo/UserNoLogin.vue';
+import UserIsLogin from './components/UserInfo/UserIsLogin.vue';
+
+const isLogin = ref(false)
+const { userLoginData } = userModules()
+
+
+const handleOutLogin = (userId) => {
+    const userLoginData = []
+    localStorage.setItem('userLoginData', JSON.stringify(userLoginData))
+    putUserHttp({ id: userId, user_islogin: 0 })
+    isLogin.value = false
+}
 </script>
 
 <style>
