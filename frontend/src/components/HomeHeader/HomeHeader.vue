@@ -10,7 +10,8 @@
                 <RealTimeTraffic />
                 <SearchEvent />
                 <MyEvent />
-
+                <ViewNotice />
+                <ToolsBox />
             </ul>
         </div>
         <div class="navbar_right">
@@ -29,6 +30,9 @@ import AddEvent from '../AddEvent.vue';
 import RealTimeTraffic from './components/RealTimeTraffic/RealTimeTraffic.vue';
 import SearchEvent from './components/SearchEvent/SearchEvent.vue';
 import MyEvent from './components/MyEvent/MyEvent.vue';
+import ViewNotice from './components/ViewNotice/ViewNotice.vue';
+import ToolsBox from './components/ToolsBox/ToolsBox.vue';
+
 import UserNoLogin from './components/UserInfo/UserNoLogin.vue';
 import UserIsLogin from './components/UserInfo/UserIsLogin.vue';
 

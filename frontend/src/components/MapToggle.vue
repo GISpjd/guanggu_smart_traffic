@@ -14,6 +14,7 @@ import { onMounted, ref } from 'vue';
 let map = ref(null)
 onMounted(() => {
     map.value = useGlobalMap()
+    console.log(map.value);
 })
 
 function toggleYingxiang() {

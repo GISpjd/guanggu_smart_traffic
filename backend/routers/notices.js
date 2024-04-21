@@ -11,7 +11,9 @@ const { getOne, getAll, exec } = require('../db')
  */
 router.get('/', async (req, res) => {
     try {
-        const { page = 1, size = 10, status } = req.query
+        let { page = 1, size = 10, status } = req.query
+        page = Number(page)
+        size = Number(size)
         const offset = (page - 1) * size
         let sql
         let data
@@ -21,24 +23,20 @@ router.get('/', async (req, res) => {
             data = await getAll(sql, [status, offset, size])
             sql = `select count(*) as total from event_notice where notice_status = ?`
             total = await getOne(sql, [status])
-            res.send({
-                code: 0,
-                message: '获取对应状态的公告成功',
-                total,
-                data
-            })
+
         } else {
             sql = `select * from event_notice`
             data = await getAll(sql)
             sql = `select count(*) as total from event_notice`
             total = await getOne(sql)
-            res.send({
-                code: 0,
-                message: '获取所有公告成功',
-                total,
-                data
-            })
         }
+
+        res.send({
+            code: 0,
+            message: status ? '获取对应状态的公告成功' : '获取所有公告成功',
+            total: total,
+            data: data
+        })
     } catch (error) {
         res.status(500).send({
             code: 500,
@@ -114,5 +112,27 @@ router.put('/:id', async (req, res) => {
     })
 })
 
+/**
+ * 删除相应公告
+ * DELETE /notices/:id
+ */
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+        let sql = `delete from event_notice where id=?`
+        const data = await exec(sql, [id])
+        res.send({
+            code: 0,
+            message: '相应公告删除成功',
+            data
+        })
+    } catch (error) {
+        res.status(500).send({
+            code: 500,
+            message: '服务器错误',
+            error: error.message
+        });
+    }
+})
 
 module.exports = router

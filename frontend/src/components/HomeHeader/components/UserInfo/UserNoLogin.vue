@@ -16,6 +16,7 @@ const handleLogin = () => {
 const hangdleRegister = () => {
     router.push({ path: 'register' })
 }
+
 </script>
 
 <style scoped>

@@ -14,8 +14,8 @@ import { onMounted } from 'vue';
 
 
 
-onMounted(() => {
-    const map = useGlobalMap()
+onMounted(async () => {
+    const map = await useGlobalMap()
     map.addControl(zoomToExtent)
     map.addControl(zoomslider)
     map.addControl(mousePosition)

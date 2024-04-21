@@ -22,13 +22,14 @@ import { userModules } from '@/stores/userModulesStore'
 import UserManage from './components/UserManage.vue'
 
 const router = useRouter()
-// 获取登录者的信息
+// 获取登录者的信息,便于后续信息的显示
 const { userLoginData } = userModules()
 
 const userName = ref('')
 const userId = ref(null)
 const userRole = ref(null)
 const isAdmin = ref(false)
+// 定义emit事件
 const emit = defineEmits(['out'])
 const isManager = ref(false)
 
