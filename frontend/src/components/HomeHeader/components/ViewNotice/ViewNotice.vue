@@ -6,7 +6,7 @@
         </el-button>
     </li>
 
-    <el-dialog title="最新公告" v-model="whetherShowNotice" modal="false">
+    <el-dialog title="最新公告" v-model="whetherShowNotice">
         <el-table :data="tableData1" style="width: 100%">
             <el-table-column prop="notice_title" label="公告标题" />
             <el-table-column prop="notice_content" label="公告内容" />

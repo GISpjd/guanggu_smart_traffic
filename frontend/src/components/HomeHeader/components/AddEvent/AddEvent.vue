@@ -1,12 +1,10 @@
 <template>
     <li class="add_event">
-        <img src="../assets/icon/add.svg" alt="" />
-        <!-- <a href="#" @click="hansleAddEvent()">我要上报</a> -->
-        <!-- <span @click="hansleAddEvent()">我要上报</span> -->
-        <el-button plain @click="dialogFormVisible = true">
+        <img src="@/assets/icon/add.svg" alt="" />
+        <el-button plain @click="whetherEventFormVisible = true">
             我要上报
         </el-button>
-        <el-dialog v-model="dialogFormVisible" title="上报事件" width="600">
+        <el-dialog v-model="whetherEventFormVisible" title="上报事件" width="600">
             <el-form :model="form">
                 <el-form-item label="事件类型:" :label-width="formLabelWidth">
                     <el-select v-model="form.event_type" placeholder="请选择事件类型">
@@ -16,7 +14,7 @@
                 </el-form-item>
 
                 <el-form-item label="事件描述:" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off" placeholder="请输入事件描述" />
+                    <el-input v-model="form.event_describe" autocomplete="off" placeholder="请输入事件描述" />
                 </el-form-item>
 
                 <el-form-item label="事件路段:" :label-width="formLabelWidth">
@@ -33,12 +31,20 @@
                 <el-form-item label="相关车辆车牌号:" :label-width="formLabelWidth">
                     <el-input v-model="form.event_car_number" autocomplete="off" placeholder="请输入相应车牌号" />
                 </el-form-item>
+
+                <el-form-item label="事件处理状态:" :label-width="formLabelWidth">
+                    <el-select v-model="form.event_handle_status" placeholder="请选择处理状态">
+                        <el-option value="0" label="未处理">未处理</el-option>
+                        <el-option value="1" label="已处理">已处理</el-option>
+
+                    </el-select>
+                </el-form-item>
             </el-form>
             <template #footer>
                 <div class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                    <el-button type="primary" @click="dialogFormVisible = false">
-                        Confirm
+                    <el-button @click="whetherEventFormVisible = false">取消上报</el-button>
+                    <el-button type="primary" @click="submitEvent">
+                        提交
                     </el-button>
                 </div>
             </template>
@@ -47,16 +53,23 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
-let dialogFormVisible = ref(false)
+import { ref, reactive, toRaw } from 'vue';
+import { postEventHttp } from '@/request/eventHttp';
+import { userModules } from '@/stores/userModulesStore'
+
+let whetherEventFormVisible = ref(false)
+const { userLoginData } = userModules()
+
 const formLabelWidth = '140px'
 
 const form = reactive({
+    user_id: '',
     event_type: '',
     event_describe: '',
     road_section_id: '',
     event_driver: '',
-    event_car_number: ''
+    event_car_number: '',
+    event_handle_status: ''
 })
 
 const typeOptions = [
@@ -133,12 +146,19 @@ const roadOptions = [
     }
 ]
 
+const submitEvent = () => {
+    // console.log(form)
+    form.user_id = userLoginData.value.id
+    let normalForm = toRaw(form)
+    postEventHttp(normalForm)
+    whetherEventFormVisible.value = false
+}
 </script>
 
 <style>
 .add_event {
     display: flex;
-    margin-top: 14px;
+
 }
 
 /* .add_event img {

@@ -107,10 +107,9 @@ router.post('/', async (req, res) => {
             road_section_id,
             event_driver,
             event_car_number,
-            event_date
         } = req.body;
-        const sql = `INSERT INTO traffic_event (user_id, event_type, event_describe,event_handle_status, road_section_id, event_driver, event_car_number,event_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-        const result = await exec(sql, [user_id, event_type, event_describe, event_handle_status, road_section_id, event_driver, event_car_number, event_date]);
+        const sql = `INSERT INTO traffic_event (user_id, event_type, event_describe,event_handle_status, road_section_id, event_driver, event_car_number) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        const result = await exec(sql, [user_id, event_type, event_describe, event_handle_status, road_section_id, event_driver, event_car_number]);
         res.send({
             code: 0,
             message: '新增成功',

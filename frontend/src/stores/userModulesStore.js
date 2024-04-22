@@ -47,10 +47,10 @@ export const userModules = () => {
                     if (code === 0) {
                         // ElMessage.success('登录成功')
                         localStorage.setItem('token', token)
-                        userLoginData.value = response.result.data
-                        const { id } = await response.result.data
+                        userLoginData.value = response.result.data[0]
+                        const { id } = await response.result.data[0]
                         localStorage.setItem('userLoginData', JSON.stringify(userLoginData.value))
-                        putUserHttp({ id, user_islogin: 1 }).then((res) => { })
+                        putUserHttp({ id, user_islogin: 1 })
                         router.push({ path: '/' })
                     }
                     if (code === 1) {

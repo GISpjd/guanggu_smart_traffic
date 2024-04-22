@@ -7,8 +7,8 @@ import { Polygon, LineString } from "ol/geom";
 import Draw from "ol/interaction/Draw";
 import { unByKey } from "ol/Observable";
 
-let source = new VectorSource();
-let vectorLayer = new VectorLayer({
+var source = new VectorSource();
+var vectorLayer = new VectorLayer({
     source: source,
     style: new Style({
         fill: new Fill({
@@ -42,25 +42,23 @@ export function useTools(map, shape, geodesic) {
     var continuePolygonMsg = '单击继续绘制多边形'
     var continueLineMsg = '单击继续绘制线条'
 
-    var measureLength = (line) => {
-        let length
+    var measureLength = function (line) {
+        var length
         if (geodesic) {
             var sourceProj = map.getView().getProjection()
-            length = getLength(line, {
-                projection: sourceProj,
-                radius: 6378137
-            })
+            console.log(sourceProj)
+            length = getLength(line, { projection: sourceProj, radius: 6378137 })
         } else {
             length = Math.round(line.getLength() * 100) / 100
         }
+        var output
         if (length > 100) {
-            output = Math.round((length / 1000) * 100) / 100 + ' ' + 'kmmmm'
+            output = Math.round((length / 1000) * 100) / 100 + ' ' + 'km'
         } else {
-            output = Math.round(length * 100) / 100 + ' ' + 'mm'
+            output = Math.round(length * 100) / 100 + ' ' + 'm'
         }
         return output
     }
-
     var measureArea = (polygon) => {
         let area
         if (geodesic) {
@@ -73,9 +71,9 @@ export function useTools(map, shape, geodesic) {
             area = getArea(polygon)
         }
         if (area > 10000) {
-            output = Math.round((area / 1000000) * 100) / 100 + ' ' + 'km<sup>2</sup>'
+            output = Math.round((area / 1000000) * 100) / 100 + ' ' + 'km²'
         } else {
-            output = Math.round(area * 100) / 100 + ' ' + 'm<sup>2</sup>'
+            output = Math.round(area * 100) / 100 + ' ' + 'm²'
         }
         return output
     }
@@ -160,6 +158,7 @@ export function useTools(map, shape, geodesic) {
         var tooltipCoord = e.coordinate
         listener = sketch.getGeometry().on('change', function (e) {
             var geom = e.target
+            // console.log(geom.getType());
             if (geom instanceof Polygon) {
                 output = measureArea(geom)
                 tooltipCoord = geom.getInteriorPoint().getCoordinates()
@@ -184,4 +183,26 @@ export function useTools(map, shape, geodesic) {
         //移除之前注册的几何变化监听器
         unByKey(listener);
     });
+}
+
+
+export function clearDraw(map) {
+    map.getOverlays().clear()
+    source.clear()
+    if (draw) {
+        map.removeInteraction(draw)
+        draw = null
+    }
+    if (vectorLayer) {
+        map.removeLayer(vectorLayer)
+        vectorLayer = null
+    }
+    // if (helpTooltipElement) {
+    //     helpTooltipElement.parentNode.removeChild(helpTooltipElement)
+    //     helpTooltipElement = null
+    // }
+    // if (measureTooltipElement) {
+    //     measureTooltipElement.parentNode.removeChild(measureTooltipElement)
+    //     measureTooltipElement = null
+    // }
 }

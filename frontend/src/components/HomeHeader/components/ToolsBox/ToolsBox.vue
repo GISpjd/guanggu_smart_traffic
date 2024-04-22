@@ -4,7 +4,7 @@
             工具箱
             <template #dropdown>
                 <el-dropdown-menu>
-                    <el-dropdown-item>清除绘制</el-dropdown-item>
+                    <el-dropdown-item @click="clearDraw(map)">清除绘制</el-dropdown-item>
                     <el-dropdown-item @click="measureLength">测量距离</el-dropdown-item>
                     <el-dropdown-item @click="measureArea">测量面积</el-dropdown-item>
                     <el-dropdown-item @click="measureLengthByGis">测地学测距离</el-dropdown-item>
@@ -17,7 +17,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useTools } from "./Hooks/useTools";
+import { useTools, clearDraw } from "./Hooks/useTools";
 import { useGlobalMap } from "@/plugins/globalmap";
 
 
@@ -26,6 +26,8 @@ let map = ref(null);
 onMounted(() => {
     map.value = useGlobalMap();
 })
+
+
 
 function measureLength() {
     useTools(map.value, 'line', false)
@@ -44,7 +46,7 @@ function measureAreaByGis() {
 }
 </script>
 
-<style scoped>
+<style>
 .tooltip {
     position: relative !important;
     background: rgba(0, 0, 0, 0.5) !important;

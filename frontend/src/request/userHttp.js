@@ -1,20 +1,21 @@
 import axios from 'axios'
 const baseUrl = import.meta.env.VITE_BASE_URL
 
-function userHttp({
+async function userHttp({
     inputUrl,
     method,
     data
 }) {
-    return axios({
-        url: baseUrl + inputUrl,
-        method,
-        data: data //发送请求体数据
-    }).then(response => {
-        return response.data
-    }).catch(error => {
+    try {
+        const response = await axios({
+            url: baseUrl + inputUrl,
+            method,
+            data: data //发送请求体数据
+        });
+        return response.data;
+    } catch (error) {
         throw error; // 可以选择抛出错误或者返回错误信息
-    })
+    }
 }
 
 /**
@@ -88,15 +89,32 @@ const postOrdinaryUserHttp = (user_name, user_password, user_role = 0) => {
  * @param {number} user_islogin 
  * @returns {Promise}
  */
-const putUserHttp = ({ id, user_name = '', user_password = '', user_islogin }) => {
+// const putUserHttp = ({ id, user_name = '', user_password = '', user_islogin }) => {
+//     return userHttp({
+//         url: `/users/${id}`,
+//         method: 'put',
+//         data: {
+//             user_name,
+//             user_password,
+//             user_islogin
+//         }
+//     })
+// }
+
+const putUserHttp = ({ id, user_name, user_password, user_islogin }) => {
+
+    const bodyParams = {
+        user_name,
+        user_password,
+        user_islogin
+    }
+    const data = Object.fromEntries(Object.entries(bodyParams)
+        .filter(([_, value]) => value != undefined)
+    )
     return userHttp({
         url: `/users/${id}`,
         method: 'put',
-        data: {
-            user_name,
-            user_password,
-            user_islogin
-        }
+        data: data
     })
 }
 

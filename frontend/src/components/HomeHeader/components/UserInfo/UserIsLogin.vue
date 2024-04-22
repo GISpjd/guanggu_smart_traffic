@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { userModules } from '@/stores/userModulesStore'
 
@@ -67,13 +67,23 @@ const handleManageuser = () => {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 20px;
+    width: 150px;
+    height: 45px;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 15px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4);
+    background-color: #b3e19d;
+    margin-top: 5px;
 }
 
 .user_name {
     font-size: 16px;
     font-weight: bold;
     margin-right: 10px;
+    line-height: 50px;
 }
 
 .dropdown {

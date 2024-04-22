@@ -22,11 +22,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { putUserHttp } from '@/request/userHttp'
 import { userModules } from '@/stores/userModulesStore'
+import { useGlobalMap } from '@/plugins/globalmap';
 
-import AddEvent from '../AddEvent.vue';
+import AddEvent from './components/AddEvent/AddEvent.vue';
 import RealTimeTraffic from './components/RealTimeTraffic/RealTimeTraffic.vue';
 import SearchEvent from './components/SearchEvent/SearchEvent.vue';
 import MyEvent from './components/MyEvent/MyEvent.vue';
@@ -37,8 +38,27 @@ import UserNoLogin from './components/UserInfo/UserNoLogin.vue';
 import UserIsLogin from './components/UserInfo/UserIsLogin.vue';
 
 const isLogin = ref(false)
+const map = useGlobalMap()
 const { userLoginData } = userModules()
 
+function handleRoam() {
+    const view = map.getView()
+    view.animate({
+        center: [114.37, 30.5],
+        zoom: 13.5,
+        duration: 1000
+    })
+}
+
+onMounted(() => {
+    console.log(userLoginData.value);
+    console.log(localStorage.getItem('userLoginData'));
+    if (userLoginData.value.id) {
+        isLogin.value = true
+    } else {
+        isLogin.value = false
+    }
+})
 
 const handleOutLogin = (userId) => {
     const userLoginData = []
@@ -91,9 +111,18 @@ const handleOutLogin = (userId) => {
 }
 
 
+.navbar_center {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
 .items {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     gap: 10px;
+    /* 调节高度等于头部的高度便于flex布局 */
+    height: 100%;
 }
 </style>
