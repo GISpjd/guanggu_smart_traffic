@@ -9,6 +9,7 @@
 import { useGlobalMap } from '@/plugins/globalmap';
 import { vecLayerGroup, imgLayerGroup } from '../map_libs/tianditu'
 import { eventLayer, policeLayer, roadStateLayer } from '../map_libs/guanggu'
+
 import { onMounted, ref } from 'vue';
 
 let map = ref(null)
@@ -23,6 +24,7 @@ function toggleYingxiang() {
     map.value.addLayer(eventLayer)
     map.value.addLayer(policeLayer)
     map.value.addLayer(roadStateLayer)
+    map.value.addLayer(guangguLayer)
 }
 
 function toggleShiliang() {
@@ -31,6 +33,7 @@ function toggleShiliang() {
     map.value.addLayer(eventLayer)
     map.value.addLayer(policeLayer)
     map.value.addLayer(roadStateLayer)
+    map.value.addLayer(guangguLayer)
 }
 
 </script>

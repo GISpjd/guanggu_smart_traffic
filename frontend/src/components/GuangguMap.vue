@@ -10,7 +10,7 @@ import { onMounted } from 'vue';
 
 onMounted(() => {
     const map = useGlobalMap()
-    console.log(map);
+    // console.log(map);
     map.addLayer(eventLayer)
     map.addLayer(policeLayer)
     map.addLayer(roadStateLayer)

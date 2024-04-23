@@ -12,6 +12,9 @@
                 <MyEvent />
                 <ViewNotice />
                 <ToolsBox />
+
+                <VideoWatch />
+                <ManageEvent />
             </ul>
         </div>
         <div class="navbar_right">
@@ -25,6 +28,7 @@
 import { ref, onMounted } from 'vue'
 import { putUserHttp } from '@/request/userHttp'
 import { userModules } from '@/stores/userModulesStore'
+// import { prototype } from '@/main';
 import { useGlobalMap } from '@/plugins/globalmap';
 
 import AddEvent from './components/AddEvent/AddEvent.vue';
@@ -33,32 +37,40 @@ import SearchEvent from './components/SearchEvent/SearchEvent.vue';
 import MyEvent from './components/MyEvent/MyEvent.vue';
 import ViewNotice from './components/ViewNotice/ViewNotice.vue';
 import ToolsBox from './components/ToolsBox/ToolsBox.vue';
+import VideoWatch from './components/VideoWatch/VideoWatch.vue';
+import ManageEvent from './components/ManageEvent/ManageEvent.vue';
 
 import UserNoLogin from './components/UserInfo/UserNoLogin.vue';
 import UserIsLogin from './components/UserInfo/UserIsLogin.vue';
 
+const isTrafficManager = ref(false)
 const isLogin = ref(false)
-const map = useGlobalMap()
-const { userLoginData } = userModules()
 
-function handleRoam() {
-    const view = map.getView()
-    view.animate({
-        center: [114.37, 30.5],
-        zoom: 13.5,
-        duration: 1000
-    })
-}
+const { userLoginData } = userModules()
+let map = null
+
 
 onMounted(() => {
-    console.log(userLoginData.value);
-    console.log(localStorage.getItem('userLoginData'));
+    map = useGlobalMap()
+    // console.log(userLoginData.value);
+    // console.log(localStorage.getItem('userLoginData'));
     if (userLoginData.value.id) {
         isLogin.value = true
     } else {
         isLogin.value = false
     }
 })
+function handleRoam() {
+    console.log('555', map);
+    // const view = prototype.$map.getView()
+    const view = map.getView()
+    console.log(view);
+    view.animate({
+        center: [114.37, 30.5],
+        zoom: 13.5,
+        duration: 1000
+    })
+}
 
 const handleOutLogin = (userId) => {
     const userLoginData = []
