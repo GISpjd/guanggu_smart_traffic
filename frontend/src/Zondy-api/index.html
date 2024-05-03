@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 导入中地接口 -->
+  <script src="./include-openlayers-local.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 设置地图容器的挂载点 -->
+  <div id="map"></div>
+  <script>
+    // 高德接口
+    var gaodeMapLayer = new ol.layer.Tile({
+      title: "高德地图",
+      source: new ol.source.XYZ({
+        url: 'http://wprd0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&style=7&x={x}&y={y}&z={z}',
+        wrapX: false
+      })
+    });
+    // 调用中地接口，读取ig server发布的地图文档
+    var docLayer = new Zondy.Map.Doc('', 'test4', {
+      id: 'localhost',
+      port: 6163
+    })
+    // 使用openlayer展示图层
+    var map = new ol.Map({
+      // 绑定地图到对应的DOM元素上，相当于Vue中的el属性
+      target: 'map',
+      // 图层 可以设置多个图层
+      layers: [gaodeMapLayer, docLayer],
+      // view视图，设置地图在什么位置显示，以什么级别、坐标显示
+      view: new ol.View({
+        center: [114.30, 30.50],
+        zoom: 4,
+        // projection 坐标
+        // 经纬度：WGS84  EPSG：4326  单位：度
+        // 墨卡托 ： EPSG：3857 单位：米
+        projection: 'EPSG:4326'
+      })
+    })
+  </script>
+</body>
+
+</html>

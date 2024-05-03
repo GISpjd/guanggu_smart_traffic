@@ -7,7 +7,7 @@
             <div class="dropdown-content">
                 <span @click="handelOutUsername(userId)">退出登录</span><br />
                 <span @click="handlePutPassword(userName)">修改密码</span><br />
-                <span v-if="isAdmin" @click="handleManageuser">管理用户</span>
+                <span v-if="isAdmin" @click="isManager = !isManager">管理用户</span>
             </div>
         </div>
         <UserManage v-if="isManager" />
@@ -57,9 +57,6 @@ const handlePutPassword = (name) => {
     })
 }
 
-const handleManageuser = () => {
-    isManager.value = !isManager
-}
 </script>
 
 <style scoped>

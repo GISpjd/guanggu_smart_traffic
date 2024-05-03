@@ -8,7 +8,7 @@
 <script setup>
 import { useGlobalMap } from '@/plugins/globalmap';
 import { vecLayerGroup, imgLayerGroup } from '../map_libs/tianditu'
-import { eventLayer, policeLayer, roadStateLayer } from '../map_libs/guanggu'
+import { guangguLayer } from '../map_libs/guanggu'
 
 import { onMounted, ref } from 'vue';
 
@@ -21,18 +21,12 @@ onMounted(() => {
 function toggleYingxiang() {
     map.value.getLayers().clear()
     map.value.addLayer(imgLayerGroup)
-    map.value.addLayer(eventLayer)
-    map.value.addLayer(policeLayer)
-    map.value.addLayer(roadStateLayer)
     map.value.addLayer(guangguLayer)
 }
 
 function toggleShiliang() {
     map.value.getLayers().clear()
     map.value.addLayer(vecLayerGroup)
-    map.value.addLayer(eventLayer)
-    map.value.addLayer(policeLayer)
-    map.value.addLayer(roadStateLayer)
     map.value.addLayer(guangguLayer)
 }
 

@@ -8,8 +8,8 @@
 import { onMounted } from 'vue';
 import { initMap } from './Hooks/useMap'
 import { useRoam } from './Hooks/useRoam'
-onMounted(async () => {
-    await initMap()
+onMounted(() => {
+    initMap()
     useRoam()
 })
 </script>

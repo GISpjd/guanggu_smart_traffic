@@ -40,6 +40,7 @@
 </template>
 
 <script setup>
+import { ref, reactive, onMounted } from 'vue'
 import { userRules } from '@/Hooks/userRules'
 import { useUserManageHttp } from './Hooks/useUserManageHttp.js'
 
@@ -55,7 +56,7 @@ const form = ref({
     password: ''
 })
 const formRef = ref(null)
-const { usernameRule, passwordRule } = useRules()
+const { usernameRule, passwordRule } = userRules()
 // 修改校验
 const rules = reactive({
     username: usernameRule,
