@@ -52,6 +52,8 @@ onMounted(() => {
         details.forEach((targetDetail) => {
             targetDetail.open = true
         })
+
+        //替换原有目录图标
         // const summarys = document.querySelectorAll('summary')
         // console.log(summarys); //NodeList
         // summarys.forEach((targetSummary) => {
@@ -64,6 +66,16 @@ onMounted(() => {
         //             return
         //         }
         //         triangle.innerHTML = targetSummary.parentNode.open ? '&#9660;' : '&#9654;'
+        //     })
+        // })
+        // const summarys = document.querySelectorAll('summary')
+        // summarys.forEach((summary) => {
+        //     const triangle = document.createElement('span')
+        //     triangle.innerHTML = '&#9660;'
+        //     triangle.style.marginRight = '5px'
+        //     summary.insertBefore(triangle, summary.firstChild)
+        //     summary.addEventListener('click', () => {
+        //         triangle.innerHTML = summary.parentNode.open ? '&#9660;' : '&#9654;'
         //     })
         // })
     }
@@ -96,10 +108,10 @@ onMounted(() => {
     }
 
     .content {
-        padding: 10px;
+        padding: 5px;
 
         summary {
-            // list-style: none;
+            //list-style: none;
             cursor: pointer;
             margin-bottom: 10px;
         }
