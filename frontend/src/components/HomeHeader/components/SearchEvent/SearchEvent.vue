@@ -50,17 +50,18 @@
         </table>
     </div>
 
+    <QueryTable @changeShow="data => popupIsShow = data" />
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useGlobalMap } from '@/plugins/globalmap'
 import { queryByDraw, isBoxSelect } from './Hooks/useSearchByDraw'
 import { highlight_source } from './Hooks/useHighlight'
 import { popupShow, eventTitle, eventContent } from './Hooks/usePopup'
 import { useSearchByInput, isSearch } from './Hooks/useSearchByInput'
-
+import QueryTable from './components/QueryTable.vue'
 
 let inputShow = ref(false)
 let address = ref('')
@@ -68,7 +69,17 @@ let map = ref(null)
 let queryLayer = ref(null)
 let popupClick = ref()
 
-let showPopup = ref(false)
+//控制popup显示
+let popupIsShow = ref()
+//一旦实现了框选查询，就取消popup的显示
+watch(popupIsShow, () => {
+    console.log('popupIsShow', popupIsShow.value);
+    if (popupIsShow.value) {
+        let popup = document.getElementById('popup')
+        popup.style.display = 'none'
+    }
+}
+)
 
 onMounted(() => {
     map.value = useGlobalMap()
@@ -88,13 +99,16 @@ const cancelBoxSelect = () => {
     isBoxSelect.value = true
 }
 
+// 输入地点查询
 const doSearch = () => {
     highlight_source.clear()
     if (address.value.trim()) {
         const { highlight_layer } = useSearchByInput(map.value, address.value)
+        // 清空输入的地址
         address.value = ''
         queryLayer.value = highlight_layer
         popupClick.value = popupShow(map.value)
+        // 关闭输入查询框
         inputShow.value = false
     } else {
         ElMessage({
