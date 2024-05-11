@@ -15,6 +15,7 @@
 
                 <VideoWatch />
                 <ManageEvent />
+                <AddNotice />
             </ul>
         </div>
         <div class="navbar_right">
@@ -39,6 +40,7 @@ import ViewNotice from './components/ViewNotice/ViewNotice.vue';
 import ToolsBox from './components/ToolsBox/ToolsBox.vue';
 import VideoWatch from './components/VideoWatch/VideoWatch.vue';
 import ManageEvent from './components/ManageEvent/ManageEvent.vue';
+import AddNotice from './components/AddNotice/AddNotice.vue';
 
 import UserNoLogin from './components/UserInfo/UserNoLogin.vue';
 import UserIsLogin from './components/UserInfo/UserIsLogin.vue';
