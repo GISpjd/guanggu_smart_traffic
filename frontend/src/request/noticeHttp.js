@@ -27,6 +27,11 @@ const getNoticeList = (page, size, status) => {
     });
 }
 
+/**
+ * 获取对应id的公告详情
+ * @param {*} id 
+ * @returns 
+ */
 const getNoticeById = (id) => {
     return noticeHttp({
         inputUrl: `/notices/${id}`,

@@ -22,13 +22,13 @@ const { userLoginData } = userModules()
 // 父组件用v-model传输该值，这边用defineModel编译宏接收一下，实现双向数据流
 const commonDialogVisible = defineModel()
 
-const publishCommonNotice = () => {
+const publishCommonNotice = async () => {
     if (!title.value || !content.value) {
         alert('公告标题和内容不能为空！');
         return
     } else {
         let userId = userLoginData.value.id
-        createNotice(userId, title.value, content.value)
+        await createNotice(userId, title.value, content.value)
         title.value = ''
         content.value = ''
         alert('发布成功！')
