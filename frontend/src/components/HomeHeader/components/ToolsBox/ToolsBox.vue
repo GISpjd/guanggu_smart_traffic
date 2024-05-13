@@ -5,10 +5,10 @@
             <template #dropdown>
                 <el-dropdown-menu>
                     <el-dropdown-item @click="clearDraw(map)">清除绘制</el-dropdown-item>
-                    <el-dropdown-item @click="measureLength">测量距离</el-dropdown-item>
-                    <el-dropdown-item @click="measureArea">测量面积</el-dropdown-item>
-                    <el-dropdown-item @click="measureLengthByGis">测地学测距离</el-dropdown-item>
-                    <el-dropdown-item @click="measureAreaByGis">测地学测面积</el-dropdown-item>
+                    <el-dropdown-item @click="measureLength()">测量距离</el-dropdown-item>
+                    <el-dropdown-item @click="measureArea()">测量面积</el-dropdown-item>
+                    <el-dropdown-item @click="measureLengthByGis()">测地学测距离</el-dropdown-item>
+                    <el-dropdown-item @click="measureAreaByGis()">测地学测面积</el-dropdown-item>
                 </el-dropdown-menu>
             </template>
         </el-dropdown>
@@ -48,13 +48,16 @@ function measureAreaByGis() {
 
 <style>
 .tooltip {
-    position: relative !important;
-    background: rgba(0, 0, 0, 0.5) !important;
-    border-radius: 4px !important;
-    color: white !important;
-    padding: 4px 8px !important;
-    opacity: 0.7 !important;
-    white-space: nowrap !important;
+    position: relative;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    color: white;
+    padding: 4px 8px;
+    opacity: 0.7;
+    white-space: nowrap;
+    font-size: 12px;
+    cursor: default;
+    user-select: none;
 }
 
 .tooltip-measure {
@@ -63,14 +66,13 @@ function measureAreaByGis() {
 }
 
 .tooltip-static {
-    background-color: #ffcc33 !important;
-    color: black !important;
+    background-color: #ffcc33;
+    color: black;
     border: 1px solid white;
 }
 
-
-.tooltip-measure::before,
-.tooltip-static::before {
+.tooltip-measure:before,
+.tooltip-static:before {
     border-top: 6px solid rgba(0, 0, 0, 0.5);
     border-right: 6px solid transparent;
     border-left: 6px solid transparent;
@@ -79,10 +81,9 @@ function measureAreaByGis() {
     bottom: -6px;
     margin-left: -7px;
     left: 50%;
-    /* opacity: 1; */
 }
 
-.tooltip-static::before {
+.tooltip-static:before {
     border-top-color: #ffcc33;
 }
 </style>

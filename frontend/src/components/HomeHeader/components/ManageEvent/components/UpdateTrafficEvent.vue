@@ -34,7 +34,7 @@
 import { ref, watch } from 'vue'
 import { getAllEventHttp } from '@/request/eventHttp';
 
-import { defineProps } from 'vue';
+
 
 const eventData = ref([]);
 const currentPage = ref(1);
