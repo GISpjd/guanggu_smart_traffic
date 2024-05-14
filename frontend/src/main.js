@@ -16,8 +16,11 @@ const app = createApp(App)
 
 export const prototype = app.config.globalProperties
 
+
 app.use(createPinia())
 app.use(router)
 app.use(ElementPlus)
 
 app.mount('#app')
+
+// console.log(prototype);

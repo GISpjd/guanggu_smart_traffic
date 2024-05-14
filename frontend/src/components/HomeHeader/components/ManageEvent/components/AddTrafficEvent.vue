@@ -1,5 +1,5 @@
 <template>
-    <el-dialog v-model="isAdd" title="添加交通事件">
+    <el-dialog v-model="eventFormShow" title="添加交通事件" @close="handleClose">
         <el-form :model="form" ref="formRef">
             <el-form-item label="事件编号" prop="eventId">
                 <el-input v-model="form.eventId"></el-input>
@@ -41,7 +41,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="submitForm('formRef')">继续</el-button>
+                <el-button type="primary" @click="submitForm()">继续</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -50,11 +50,14 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useGlobalMap } from '@/plugins/globalmap'
-import { createDraw } from '@/utils/createDraw'
 import { Point } from '@/utils/es6AddPoint'
 
-let isAdd = defineModel()
+
+let eventFormShow = ref(false)
 let map = ref(null)
+let isAdd = defineModel()
+
+
 
 const form = reactive({
     eventId: 'SJ2023',
@@ -69,13 +72,73 @@ const form = reactive({
 
 onMounted(() => {
     map.value = useGlobalMap()
+    // console.log(map.value);
+    isAdd.value = true
+    if (isAdd.value) {
+        console.log(isAdd.value);
+        addPoint()
+    }
 })
 
 let docLayer, position, service, attr, status
 let draw = []
 const addPoint = () => {
-    docLayer = map.value.getLayer().item(1)
+    docLayer = map.value.getLayers().item(1)
     console.log(docLayer);
+    var source = new ol.source.Vector({})
+    var layer = new ol.layer.Vector({
+        source
+    })
+    map.value.addLayer(layer)
+
+    draw = new ol.interaction.Draw({
+        source: source,
+        type: 'Point'
+    })
+    map.value.addInteraction(draw)
+    draw.on('drawend', (e) => {
+        // 关闭这个dialog
+        eventFormShow.value = true
+        position = e.feature.getGeometry().getCoordinates()
+        // console.log(position)
+        draw.setActive(false)
+        map.value.removeInteraction(draw)
+        service = {
+            name: 'guanggu',
+            layerId: 2
+        }
+    })
+
+}
+
+const submitForm = () => {
+    attr = [
+        { type: 'string', key: '事件编号', value: form.eventId },
+        { type: 'string', key: '事件类型', value: form.eventType },
+        { type: 'smallint', key: '事件等级', value: form.eventLevel },
+        { type: 'string', key: '发生时间', value: form.eventTime },
+        { type: 'string', key: '发生地点', value: form.eventLocation },
+        { type: 'string', key: '车牌号', value: form.plateNumber },
+        { type: 'string', key: '驾驶员', value: form.eventDriver },
+        { type: 'smallint', key: '处理状态', value: form.eventStatus },
+        { type: 'int', key: 'mpLayer', value: 0 }
+    ]
+    Point.add({
+        position,
+        service,
+        attr,
+        docLayer,
+        form
+    })
+    eventFormShow.value = false
+    docLayer.refresh()
+}
+
+// 关闭dialog之后的逻辑
+const handleClose = () => {
+    eventFormShow.value = false
+    // 通知父组件将isAdd的值设置为false，避免之后的二次点击生效
+    isAdd.value = false
 }
 
 </script>

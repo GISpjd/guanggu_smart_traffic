@@ -12,7 +12,6 @@
     <el-pagination :page-sizes="[5, 10, 20, 50]" v-model:page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper" v-model:current-page="currentPage" :total="total"
         @update:page-size="handlePageSizeChange" @update:current-page="handleCurrentPageChange">
-
     </el-pagination>
     <el-dialog title="公告详情" v-model="detailNoticeDialogVisible">
         <div class="detail-container">

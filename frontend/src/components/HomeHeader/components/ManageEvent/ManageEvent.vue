@@ -13,8 +13,8 @@
             </template>
         </el-dropdown>
     </li>
-    <AddTrafficEvent v-model="isAdd" />
-    <UpdateTrafficEvent v-if="isUpdate" :visible="isUpdate" />
+    <AddTrafficEvent v-if="isAdd" v-model="isAdd" />
+    <UpdateTrafficEvent v-if="isUpdate" v-model="isUpdate" />
 </template>
 
 <script setup>
