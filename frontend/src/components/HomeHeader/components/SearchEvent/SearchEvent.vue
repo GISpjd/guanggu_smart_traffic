@@ -51,6 +51,8 @@
     </div>
 
     <QueryTable @changeShow="data => popupIsShow = data" />
+
+    <DataCharts v-if="isChartsShow" v-model="isChartsShow" />
 </template>
 
 <script setup>
@@ -61,13 +63,18 @@ import { queryByDraw, isBoxSelect } from './Hooks/useSearchByDraw'
 import { highlight_source } from './Hooks/useHighlight'
 import { popupShow, eventTitle, eventContent } from './Hooks/usePopup'
 import { useSearchByInput, isSearch } from './Hooks/useSearchByInput'
+
 import QueryTable from './components/QueryTable.vue'
+import DataCharts from './components/DataCharts.vue'
 
 let inputShow = ref(false)
 let address = ref('')
 let map = ref(null)
 let queryLayer = ref(null)
 let popupClick = ref()
+
+// 控制DataCharts组件显示与否
+let isChartsShow = ref(false)
 
 //控制popup显示
 let popupIsShow = ref()
@@ -127,6 +134,11 @@ const boxSelectQuery = () => {
     queryLayer.value = highlight_layer
     myDraw.value = draw
 
+}
+
+// 点击下拉框中的统计图，显示DataCharts组件
+const showCharts = () => {
+    isChartsShow.value = true
 }
 </script>
 

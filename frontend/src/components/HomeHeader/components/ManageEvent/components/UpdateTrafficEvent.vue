@@ -36,7 +36,7 @@
 <script setup>
 import { ref, onMounted, watchEffect, onUpdated, nextTick, watch } from 'vue'
 import { useGlobalMap } from '@/plugins/globalmap';
-import { useGetEvent } from '@/stores/eventPutStore';
+import { useGetEvent } from '@/stores/eventManage/eventPutStore';
 
 let map = ref(null)
 // 接收父组件传来的isUpdated,实现双向数据流

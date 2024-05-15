@@ -15,21 +15,24 @@
     </li>
     <AddTrafficEvent v-if="isAdd" v-model="isAdd" />
     <UpdateTrafficEvent v-if="isUpdate" v-model="isUpdate" />
+    <AuditTrafficEvent v-if="isAudit" v-model="isAudit" />
 </template>
 
 <script setup>
-import axios from 'axios';
 import { ArrowDown } from '@element-plus/icons-vue'
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 import AddTrafficEvent from './components/AddTrafficEvent.vue';
 import UpdateTrafficEvent from './components/UpdateTrafficEvent.vue';
+import AuditTrafficEvent from './components/AuditTrafficEvent.vue';
 
 let isAdd = ref(false);
 let isAudit = ref(false);
 let isUpdate = ref(false);
 
-
+// watch(isAudit, (newVal) => {
+//     console.log(newVal);
+// })
 
 
 

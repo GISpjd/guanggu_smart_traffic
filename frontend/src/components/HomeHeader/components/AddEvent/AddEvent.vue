@@ -1,10 +1,10 @@
 <template>
     <li class="add_event">
-        <img src="@/assets/icon/add.svg" alt="" />
+        <img class="image" src="@/assets/icon/add.svg" alt="" />
         <el-button plain @click="whetherEventFormVisible = true">
             我要上报
         </el-button>
-        <el-dialog v-model="whetherEventFormVisible" title="上报事件" width="600">
+        <el-dialog v-model="whetherEventFormVisible" title="上报事件">
             <el-form :model="form">
                 <el-form-item label="事件类型:" :label-width="formLabelWidth">
                     <el-select v-model="form.event_type" placeholder="请选择事件类型">
@@ -35,8 +35,8 @@
                 <el-form-item label="事件处理状态:" :label-width="formLabelWidth">
                     <el-select v-model="form.event_handle_status" placeholder="请选择处理状态">
                         <el-option value="0" label="未处理">未处理</el-option>
-                        <el-option value="1" label="已处理">已处理</el-option>
-
+                        <el-option value="1" label="处理中">处理中</el-option>
+                        <el-option value="2" label="已处理">已处理</el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
@@ -56,6 +56,7 @@
 import { ref, reactive, toRaw } from 'vue';
 import { postEventHttp } from '@/request/eventHttp';
 import { userModules } from '@/stores/userModulesStore'
+import { ElMessage } from 'element-plus';
 
 let whetherEventFormVisible = ref(false)
 const { userLoginData } = userModules()
@@ -146,32 +147,37 @@ const roadOptions = [
     }
 ]
 
-const submitEvent = () => {
-    // console.log(form)
+const submitEvent = async () => {
+    // 为form添加上上报该事件的人的id
     form.user_id = userLoginData.value.id
+    // 提交的时候把响应式数据转成普通数据
     let normalForm = toRaw(form)
-    postEventHttp(normalForm)
+    // 提交数据
+    await postEventHttp(normalForm).then(() => {
+        ElMessage.success('上报成功')
+    })
+    // 重置表单
+    Object.assign(form, {
+        user_id: '',
+        event_type: '',
+        event_describe: '',
+        road_section_id: '',
+        event_driver: '',
+        event_car_number: '',
+        event_handle_status: ''
+    })
+    // 关闭当前dialog
     whetherEventFormVisible.value = false
 }
 </script>
 
-<style>
+<style scoped lang="scss">
 .add_event {
     display: flex;
+    gap: 5px;
 
-}
-
-/* .add_event img {
-    margin-right: 10px;
-    text-align: center;
-} */
-
-.add_event span {
-    font-size: 16px;
-    color: #333;
-}
-
-.add_event span:hover {
-    cursor: pointer;
+    .image:hover {
+        cursor: pointer;
+    }
 }
 </style>
