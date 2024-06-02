@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useGlobalMap } from '@/plugins/globalmap'
 import { queryByDraw, isBoxSelect } from './Hooks/useSearchByDraw'
@@ -72,6 +72,7 @@ let address = ref('')
 let map = ref(null)
 let queryLayer = ref(null)
 let popupClick = ref()
+let myDraw = ref(null)
 
 // 控制DataCharts组件显示与否
 let isChartsShow = ref(false)
@@ -96,15 +97,50 @@ onMounted(() => {
 const queryEvent = () => {
     isSearch.value = !isSearch
     inputShow.value = true
+
 }
 
 const cancelSearch = () => {
     isSearch.value = true
     inputShow.value = false
+    let popup = document.getElementById('popup')
+    popup.style.display = 'none'
+    highlight_source.clear()
+    map.value.removeLayer(queryLayer.value)
 }
 const cancelBoxSelect = () => {
+    //显示框选查询
     isBoxSelect.value = true
+    //关闭popup
+    let popup = document.getElementById('popup')
+    popup.style.display = 'none'
+    map.value.un('click', popupClick.value)
+    if (myDraw.value) {
+        map.value.removeInteraction(myDraw.value)
+    }
+    map.value.removeLayer(queryLayer.value)
+    highlight_source.clear()
 }
+
+// 控制事件详细信息popup的隐藏
+const hiddenPopup = () => {
+    let popup = document.getElementById('popup')
+    popup.style.display = 'none'
+}
+
+const eventLevel = computed(() => {
+    return (status) => {
+        switch (status) {
+            case '0':
+                return '未处理'
+            case '1':
+                return '处理中'
+            case '2':
+                return '已处理'
+        }
+    }
+})
+
 
 // 输入地点查询
 const doSearch = () => {
@@ -127,13 +163,12 @@ const doSearch = () => {
     }
 }
 
-let myDraw = ref(null)
+
 const boxSelectQuery = () => {
     const { highlight_layer, draw } = queryByDraw(map.value)
     popupClick.value = popupShow(map.value)
     queryLayer.value = highlight_layer
     myDraw.value = draw
-
 }
 
 // 点击下拉框中的统计图，显示DataCharts组件
@@ -164,6 +199,7 @@ const showCharts = () => {
 }
 
 #popup {
+    font-family: Arial, Helvetica, sans-serif;
     display: none !important;
     z-index: -1;
     width: 300px;
