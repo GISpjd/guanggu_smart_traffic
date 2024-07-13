@@ -88,7 +88,7 @@ const handleOutLogin = (userId) => {
     top: 0;
     width: 100%;
     height: 60px;
-    background: linear-gradient(to top, rgba(255, 255, 255, 0.7) 70%, rgba(255, 255, 255, 1) 100%);
+    background: linear-gradient(to top, rgba(57, 53, 53, 0.7) 70%, rgb(87, 81, 81) 100%);
     z-index: 10;
     box-sizing: border-box;
     display: flex;

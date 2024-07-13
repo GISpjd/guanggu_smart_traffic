@@ -10,11 +10,11 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 
 const handleLogin = () => {
-    router.push({ path: 'login' })
+    router.push({ path: '/login' })
 }
 
 const hangdleRegister = () => {
-    router.push({ path: 'register' })
+    router.push({ path: '/register' })
 }
 
 </script>

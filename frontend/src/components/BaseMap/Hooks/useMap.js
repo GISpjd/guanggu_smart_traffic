@@ -12,7 +12,7 @@ export const initMap = () => {
             center: [114.37, 30.5],
             zoom: 10,
             minZoom: 4
-        })
+        }),
     })
     prototype.$map = map
 }
